@@ -58,12 +58,12 @@ class RNN(tf.keras.Model):
 
         self.model = tf.keras.models.Sequential([
             tf.keras.Input(batch_shape=[batch_size, None]),
-            tf.keras.layers.Embedding(vocab_size, embedding_dim),
+            tf.keras.layers.Embedding(vocab_size, embedding_dim, name="embedding"),
             tf.keras.layers.LSTM(rnn_units, return_sequences=True, stateful=False, name="lstm_1"),
             tf.keras.layers.Dropout(0.1),
             tf.keras.layers.LSTM(rnn_units, return_sequences=True, stateful=False, name="lstm_2"),
             tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(vocab_size, kernel_regularizer=tf.keras.regularizers.l2(1e-4))
+            tf.keras.layers.Dense(vocab_size, kernel_regularizer=tf.keras.regularizers.l2(1e-4), name="dense")
         ])
     def call(self, x):
         return self.model(x)
